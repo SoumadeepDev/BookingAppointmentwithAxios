@@ -28,7 +28,7 @@ function saveToCloud(name, email, phoneNumber) {
   // saving to cloud using CRUD CRUD
   axios
     .post(
-      "https://crudcrud.com/api/a5eeeb1f0a174220adb40c0a4152aefd/appointmentData",
+      "https://crudcrud.com/api/d6e59c2a536546938d869f10b043634b/appointmentData",
       userdata
     )
     .then((res) => {
@@ -61,16 +61,15 @@ function displayUsers(userDataList) {
   }
 }
 
-function checkUI() {
-  // Fetch data from CRUD CRUD to display on UI
-  axios
-    .get(
-      "https://crudcrud.com/api/a5eeeb1f0a174220adb40c0a4152aefd/appointmentData"
-    )
-    .then((res) => {
-      displayUsers(res.data);
-    })
-    .catch((err) => console.log(err));
+async function checkUI() {
+  try {
+    const res = await axios.get(
+      "https://crudcrud.com/api/d6e59c2a536546938d869f10b043634b/appointmentData"
+    );
+    displayUsers(res.data);
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // event listener for delete button
@@ -88,19 +87,15 @@ function deleteUserByIndex(index) {
   // Fetch data from CRUD CRUD to get the current user list
   axios
     .get(
-      "https://crudcrud.com/api/a5eeeb1f0a174220adb40c0a4152aefd/appointmentData"
+      "https://crudcrud.com/api/d6e59c2a536546938d869f10b043634b/appointmentData"
     )
     .then((res) => {
       let userDataList = res.data;
       if (index >= 0 && index < userDataList.length) {
-        // Remove the user at the specified index
-        userDataList.splice(index, 1);
-
-        // Update the data on CRUD CRUD after deletion
+        const userId = userDataList[index]._id;
         axios
-          .put(
-            "https://crudcrud.com/api/a5eeeb1f0a174220adb40c0a4152aefd/appointmentData",
-            userDataList
+          .delete(
+            `https://crudcrud.com/api/d6e59c2a536546938d869f10b043634b/appointmentData/${userId}`
           )
           .then(() => {
             checkUI(); // Refresh the UI after deletion
@@ -118,6 +113,7 @@ function setupEditButton() {
     btn.addEventListener("click", function (e) {
       const dataIndex = e.target.getAttribute("data-index");
       populateUserDetailsForEdit(dataIndex);
+      deleteUserByIndex(dataIndex);
     });
   });
 }
@@ -126,7 +122,7 @@ function populateUserDetailsForEdit(index) {
   // Fetch data from CRUD CRUD to get the current user list
   axios
     .get(
-      "https://crudcrud.com/api/a5eeeb1f0a174220adb40c0a4152aefd/appointmentData"
+      "https://crudcrud.com/api/d6e59c2a536546938d869f10b043634b/appointmentData"
     )
     .then((res) => {
       let userDataList = res.data;
@@ -141,4 +137,6 @@ function populateUserDetailsForEdit(index) {
 }
 
 // when the DOM loads, load the below function
-checkUI();
+window.addEventListener("DOMContentLoaded", () => {
+  checkUI();
+});
