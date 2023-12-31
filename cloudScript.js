@@ -33,6 +33,7 @@ function saveToCloud(name, email, phoneNumber) {
     )
     .then((res) => {
       displayUsers(res.data);
+      checkUI();
       console.log(res);
     })
     .catch((err) => console.log(err));
