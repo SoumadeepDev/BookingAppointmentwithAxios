@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Booking Application</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Booking Application</h1>
+      <form id="bookingForm" class="flex-container">
+        <div class="input-container">
+          <label for="name">Name:</label>
+          <input type="text" id="name" required />
+        </div>
+
+        <div class="input-container">
+          <label for="email">Email:</label>
+          <input type="email" id="email" required />
+        </div>
+
+        <div class="input-container">
+          <label for="phone">Phone Number:</label>
+          <input type="text" id="phone" required />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+
+      <div id="bookingData" class="flex-container">
+        <!-- Display user data here -->
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.3/axios.min.js"></script>
+    <script src="cloudScript.js"></script>
+  </body>
+</html>
